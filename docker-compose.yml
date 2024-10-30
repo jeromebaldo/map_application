@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  map_app_view:
+  map_view:
     build:
-      context: ./map_app_view  # Le chemin vers le répertoire où se trouve le Dockerfile
+      context: ./map_view  # Le chemin vers le répertoire où se trouve le Dockerfile
       dockerfile: Dockerfile
     ports:
       - "8080:80"  # Lie le port 80 du conteneur au port 8080 de l'hôte
-    container_name: map_app_view  # Nom du conteneur pour faciliter le suivi
+    container_name: map_view  # Nom du conteneur pour faciliter le suivi

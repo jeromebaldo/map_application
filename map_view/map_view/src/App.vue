@@ -5,6 +5,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import MapComponent from './components/MapComponent.vue';
+
 @Options({
   components: {
     MapComponent,
