@@ -1,0 +1,16 @@
+Flask==2.3.2
+Flask-CORS==3.0.10  # Pour permettre la communication entre les conteneurs (CORS)
+requests==2.31.0  # Pour les requêtes HTTP vers le conteneur Vue.js
+gunicorn==21.2.0  # Pour exécuter le serveur Flask en production
+
+# Bibliothèques géospatiales
+GDAL==3.5.2  # Pour la manipulation de données géospatiales
+Fiona==1.8.22  # Pour la lecture/écriture de fichiers de formats géospatiaux
+geopandas==0.12.2  # Pour manipuler des données géospatiales de manière tabulaire
+Shapely==2.0.1  # Pour manipuler des objets géométriques
+pyproj==3.5.0  # Pour la transformation de systèmes de coordonnées
+rasterio==1.3.6  # Pour lire et écrire des fichiers de données raster
+
+# Autres
+pandas==1.5.3  # Pour manipuler des données tabulaires
+numpy==1.23.5  # Pour les opérations numériques

@@ -1,10 +1,22 @@
-version: '3.8'
+version: "3.8"
 
 services:
   map_view:
     build:
-      context: ./map_view  # Le chemin vers le répertoire où se trouve le Dockerfile
+      context: ./map_view
       dockerfile: Dockerfile
     ports:
-      - "8080:80"  # Lie le port 80 du conteneur au port 8080 de l'hôte
-    container_name: map_view  # Nom du conteneur pour faciliter le suivi
+      - "8080:80" # Lie le port 80 du conteneur au port 8080 de l'hôte
+    container_name: map_view
+  map_back:
+    build:
+      context: ./map_back
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_DEBUG: "True"
+    command: >
+      bash -c "flask run --host=0.0.0.0"
+    container_name: map_back
