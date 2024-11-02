@@ -6,17 +6,27 @@ services:
       context: ./map_view
       dockerfile: Dockerfile
     ports:
-      - "8080:80" # Lie le port 80 du conteneur au port 8080 de l'hôte
+      - "8080:80"
+    depends_on:
+      - map_back
     container_name: map_view
+    networks:
+      - my_network
+
   map_back:
     build:
       context: ./map_back
       dockerfile: Dockerfile
-    restart: always
     ports:
       - "5000:5000"
     environment:
-      FLASK_DEBUG: "True"
-    command: >
-      bash -c "flask run --host=0.0.0.0"
+        FLASK_DEBUG: "True"
+        FLASK_APP: "map_back"
+    command: flask run --host=0.0.0.0 --port=5000
     container_name: map_back
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

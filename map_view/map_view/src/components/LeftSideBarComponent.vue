@@ -11,15 +11,16 @@
 
 <script lang="ts">
 import { defineComponent, watch, PropType } from 'vue';
+import { fromLonLat } from 'ol/proj';
+import { Map } from 'ol';
+import { Style, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
+import axios from 'axios';
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
+import Point from 'ol/geom/Point';
 import Polygon from 'ol/geom/Polygon';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
-import { fromLonLat } from 'ol/proj';
-import { Style, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
-import { Map } from 'ol';
 
 export default defineComponent({
     name: 'LeftSideBarComponent',
@@ -32,12 +33,10 @@ export default defineComponent({
     setup(props) {
         let vectorLayer: VectorLayer | null = null;
 
-        // Utiliser watch pour attendre que mapInstance soit initialisé
         watch(
             () => props.mapInstance,
             (newMapInstance) => {
                 if (newMapInstance) {
-                    // Créer la couche vectorielle et l'ajouter à la carte
                     vectorLayer = new VectorLayer({
                         source: new VectorSource(),
                         style: new Style({
@@ -64,7 +63,7 @@ export default defineComponent({
             { immediate: true }
         );
 
-        const addGeometries = () => {
+        const addGeometries = async () => {
             if (!vectorLayer) {
                 console.error('Vector layer is not available.');
                 return;
@@ -76,35 +75,63 @@ export default defineComponent({
                 return;
             }
 
-            // Ajouter des géométries à la source vectorielle
-            const pointFeature = new Feature({
-                geometry: new Point(fromLonLat([-71.0657, 48.4289])),
-            });
+            try {
+                const response = await axios.post('http://0.0.0.0:5000/import');
+                const geometries = response.data.geometries;
+                console.log(geometries);
+                for (const geometry of geometries) {
+                    switch (geometry.type) {
+                        case "polygon": {
 
-            const lineFeature = new Feature({
-                geometry: new LineString([
-                    fromLonLat([-71.0657, 48.4289]),
-                    fromLonLat([-71.1, 48.5]),
-                ]),
-            });
+                            const polygonsFeature = geometry.coordinates.map((polygon: number[][]) => {
+                                return polygon.map((coord: number[]) => fromLonLat(coord));
+                            });
 
-            const polygonFeature = new Feature({
-                geometry: new Polygon([
-                    [
-                        fromLonLat([-71.0657, 48.4289]),
-                        fromLonLat([-71.1, 48.5]),
-                        fromLonLat([-71.2, 48.4]),
-                        fromLonLat([-71.0657, 48.4289]),
-                    ],
-                ]),
-            });
+                            let polygonFeature = new Feature({
+                                geometry: new Polygon(polygonsFeature),
+                            });
 
-            vectorSource.addFeature(pointFeature);
-            vectorSource.addFeature(lineFeature);
-            vectorSource.addFeature(polygonFeature);
+                            vectorSource.addFeature(polygonFeature);
+                            break;
+                        }
+
+                        case "linestring": {
+
+                            const lineCoordinates = geometry.coordinates.map((coord: number[]) => fromLonLat(coord));
+
+                            let lineFeature = new Feature({
+                                geometry: new LineString(lineCoordinates),
+                            });
+
+                            vectorSource.addFeature(lineFeature);
+                            break;
+                        }
+
+                        case "point": {
+
+                            if (geometry.coordinates && geometry.coordinates.length === 2) {
+                                const pointCoordinates = fromLonLat(geometry.coordinates);
+                                let pointFeature = new Feature({
+                                    geometry: new Point(pointCoordinates),
+                                });
+                                vectorSource.addFeature(pointFeature);
+                            } else {
+                                console.error("Invalid coordinates for point feature");
+                            }
+                            break;
+                        }
+
+                        default: {
+                            console.log('pas le bon type: ' + geometry.type);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to import geometries:', error);
+            }
         };
 
-        const removeGeometries = () => {
+            const removeGeometries = () => {
             if (!vectorLayer) {
                 console.error('Vector layer is not available.');
                 return;
@@ -116,7 +143,6 @@ export default defineComponent({
                 return;
             }
 
-            // Supprimer toutes les géométries de la source vectorielle
             vectorSource.clear();
         };
 
@@ -160,5 +186,4 @@ export default defineComponent({
 .import-form button:hover {
     background-color: #A9A9A9;
 }
-
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <ModalFileComponent v-model:isOpened="showModal" />
   <div ref="mapContainer" class="map-container"></div>
   <LeftSideBarComponent :mapInstance="mapInstance" />
 </template>
@@ -11,15 +12,18 @@ import OSM from 'ol/source/OSM';
 import LeftSideBarComponent from './LeftSideBarComponent.vue';
 import { fromLonLat } from 'ol/proj';
 import { Zoom, defaults as defaultControls } from 'ol/control';
+import ModalFileComponent from './ModalFileComponent.vue';
 
 export default defineComponent({
   name: 'MapComponent',
   components: {
     LeftSideBarComponent,
+    ModalFileComponent,
   },
   setup() {
     const mapContainer = ref<HTMLElement | null>(null);
     const mapInstance = ref<Map | null>(null);
+    const showModal = ref(true);
 
     onMounted(() => {
       if (mapContainer.value) {
@@ -43,9 +47,15 @@ export default defineComponent({
       }
     });
 
+    const openModal = () => {
+      showModal.value = true;
+    };
+
     return {
       mapContainer,
       mapInstance,
+      showModal,
+
     };
   },
 });
