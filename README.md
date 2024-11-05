@@ -20,6 +20,7 @@ How do I run the application?
        - docker-compose build
        - docker-compose up -d
 - test with test files => chicout_line.kml, chicout_point.kml, chicout_polygon.kml
+
 ![image](https://github.com/user-attachments/assets/a5389e76-8822-4e63-8e31-7ff0894d8cd4)
 ![image](https://github.com/user-attachments/assets/2c90264b-ed9a-4f42-802f-5791f6052db7)
 
