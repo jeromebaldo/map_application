@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Points d'intérêt à Chicoutimi</name>
+    <description>Quelques points notables à Chicoutimi, Québec</description>
+    <Placemark>
+      <name>Parc Rivière-du-Moulin</name>
+      <Point>
+        <coordinates>-71.0657,48.4289,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Université du Québec à Chicoutimi (UQAC)</name>
+      <Point>
+        <coordinates>-71.0642,48.4164,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Centre historique des Sœurs du Bon-Conseil</name>
+      <Point>
+        <coordinates>-71.0596,48.4297,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Zone portuaire de Chicoutimi</name>
+      <Point>
+        <coordinates>-71.0484,48.4218,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Cathédrale de Chicoutimi</name>
+      <Point>
+        <coordinates>-71.0693,48.4306,0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Polygones sur Chicoutimi</name>
+
+    <Placemark>
+      <name>Polygone 1</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -71.0707,48.4350,0
+              -71.0737,48.4360,0
+              -71.0727,48.4390,0
+              -71.0697,48.4380,0
+              -71.0707,48.4350,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+
+    <Placemark>
+      <name>Polygone 2</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -71.0570,48.4400,0
+              -71.0600,48.4410,0
+              -71.0580,48.4440,0
+              -71.0550,48.4430,0
+              -71.0570,48.4400,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+
+    <Placemark>
+      <name>Polygone 3</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -71.0840,48.4300,0
+              -71.0860,48.4320,0
+              -71.0850,48.4340,0
+              -71.0820,48.4325,0
+              -71.0840,48.4300,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+
+    <Placemark>
+      <name>Polygone 4</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -71.0500,48.4260,0
+              -71.0520,48.4280,0
+              -71.0510,48.4295,0
+              -71.0485,48.4280,0
+              -71.0500,48.4260,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+
+    <Placemark>
+      <name>Polygone 5</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -71.0650,48.4200,0
+              -71.0675,48.4220,0
+              -71.0660,48.4240,0
+              -71.0635,48.4230,0
+              -71.0650,48.4200,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>

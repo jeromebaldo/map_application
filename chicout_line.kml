@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Linestrings in Chicoutimi</name>
+    <!-- LineString 1 -->
+    <Placemark>
+      <name>LineString 1</name>
+      <LineString>
+        <coordinates>
+          -71.0825,48.4330,0
+          -71.0850,48.4400,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+    <!-- LineString 2 -->
+    <Placemark>
+      <name>LineString 2</name>
+      <LineString>
+        <coordinates>
+          -71.1000,48.4500,0
+          -71.1050,48.4600,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+    <!-- LineString 3 -->
+    <Placemark>
+      <name>LineString 3</name>
+      <LineString>
+        <coordinates>
+          -71.1200,48.4700,0
+          -71.1250,48.4800,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+    <!-- LineString 4 -->
+    <Placemark>
+      <name>LineString 4</name>
+      <LineString>
+        <coordinates>
+          -71.1400,48.4600,0
+          -71.1450,48.4700,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+    <!-- LineString 5 -->
+    <Placemark>
+      <name>LineString 5</name>
+      <LineString>
+        <coordinates>
+          -71.1600,48.4500,0
+          -71.1650,48.4550,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+  </Document>
+</kml>
