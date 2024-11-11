@@ -3,11 +3,8 @@
     <div class="modal-content">
       <span class="close-button" @click="closeModal">&times;</span>
       <div>
-        <h2>Veuillez sélectionner un fichier local</h2>
+        <h2>Please select a local file</h2>
         <input type="file" @change="handleFileSelection" />
-        <div v-if="selectedFileName" class="file-info">
-          Fichier sélectionné : {{ selectedFileName }}
-        </div>
       </div>
     </div>
   </div>
@@ -15,15 +12,8 @@
 
 <script lang="ts">
 import axios from 'axios';
-import Feature from 'ol/Feature';
-import LineString from 'ol/geom/LineString';
-import Point from 'ol/geom/Point';
-import Polygon from 'ol/geom/Polygon';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
 import { defineComponent, ref, inject } from 'vue';
-import { fromLonLat } from 'ol/proj';
-import { Map as OlMap } from 'ol';
+
 
 export default defineComponent({
   name: 'ModalFileComponent',
@@ -32,9 +22,6 @@ export default defineComponent({
     const selectedFile = ref<File | null>(null);
     const selectedFileName = ref<string | null>(null);
     const statusMessage = ref<string | null>(null);
-
-    // Inject the `getMapInstance` method
-    const getMapInstance = inject<() => OlMap | null>('getMapInstance');
 
     // Methods
     const openModal = () => {
@@ -45,14 +32,16 @@ export default defineComponent({
       isOpened.value = false;
     };
 
+    const addLayer = inject('addLayer') as ((geometries: any[]) => void) | undefined; // eslint-disable-line no-unused-vars
+
     const handleFileSelection = (event: Event) => {
       const input = event.target as HTMLInputElement;
 
       if (input.files && input.files.length > 0) {
         selectedFile.value = input.files[0];
         selectedFileName.value = input.files[0].name;
-        uploadFile();
         closeModal();
+        uploadFile();
       } else {
         selectedFile.value = null;
         selectedFileName.value = null;
@@ -71,66 +60,12 @@ export default defineComponent({
             },
           });
 
-          const geometries = response.data.geometries;
-
-          const vectorSource = new VectorSource();
-
-          for (const geometry of geometries) {
-            
-            let geomCarac = JSON.parse(geometry.coordinates);
-
-            switch (geomCarac.type.toLowerCase()) {
-              case "polygon": {
-                const polygonsFeature = geomCarac.coordinates.map((polygon: number[][]) => {
-                  return polygon.map((coord: number[]) => fromLonLat(coord));
-                });
-
-                let polygonFeature = new Feature({
-                  geometry: new Polygon(polygonsFeature),
-                });
-
-                vectorSource.addFeature(polygonFeature);
-                break;
-              }
-
-              case "linestring": {
-                const lineCoordinates = geomCarac.coordinates.map((coord: number[]) => fromLonLat(coord));
-
-                let lineFeature = new Feature({
-                  geometry: new LineString(lineCoordinates),
-                });
-
-                vectorSource.addFeature(lineFeature);
-                break;
-              }
-
-              case "point": {
-
-                const pointCoordinates = fromLonLat([geomCarac.coordinates[0], geomCarac.coordinates[1]]);
-                const pointFeature = new Feature({
-                  geometry: new Point(pointCoordinates),
-                });
-
-                vectorSource.addFeature(pointFeature);
-                break;
-              }
-
-              default: {
-                console.error('Geometry type not supported : ' + geometry.type);
-              }
-            }
-          }
-
-          const vectorLayer = new VectorLayer({
-            source: vectorSource,
-          });
-
-          const mapInstance = getMapInstance ? getMapInstance() : null;
-          if (mapInstance) {
-            mapInstance.addLayer(vectorLayer);
+          if (addLayer) {
+            addLayer(response.data.geometries);
           } else {
-            console.error("Unable to obtain the card instance.");
+            console.error('addLayer function not available');
           }
+
 
         } catch (error: any) {
           if (error.response) {

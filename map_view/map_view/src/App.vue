@@ -1,15 +1,15 @@
 <template>
-  <AppMap />
+  <AppMapMain />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import AppMap from './components/AppMap.vue';
+import AppMapMain from './mainComponents/AppMapMain.vue';
 
 
 @Options({
   components: {
-    AppMap,
+    AppMapMain,
   },
 })
 export default class App extends Vue { }
@@ -17,7 +17,7 @@ export default class App extends Vue { }
 
 <style>
 #app {
-  height: 100vh; /* Assurer que l'application prend tout l'écran */
+  height: 100vh;
   width: 100vw;
   overflow: hidden;
 }

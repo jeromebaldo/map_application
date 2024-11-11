@@ -5,10 +5,14 @@
 <script lang="ts">
 import { ref, defineComponent, onMounted } from 'vue';
 import { Map, View } from 'ol';
+import { Zoom, defaults as defaultControls } from 'ol/control';
+import { fromLonLat } from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
-import { Zoom, defaults as defaultControls } from 'ol/control';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+
+import { GeometryFactory } from '../typescript/geometry/GeomFactory';
 
 export default defineComponent({
   name: 'MapComponent',
@@ -16,7 +20,7 @@ export default defineComponent({
     const mapContainer = ref<HTMLElement | null>(null);
     const mapInstance = ref<Map | null>(null);
 
-    // Initialize the board when the component is mounted
+    // Initialise la carte lorsque le composant est monté
     onMounted(() => {
       if (mapContainer.value) {
         mapInstance.value = new Map({
@@ -36,15 +40,41 @@ export default defineComponent({
             }),
           ]),
         });
-        console.log('Carte initialisée');
       } else {
         console.error('Impossible de trouver le conteneur pour la carte');
       }
     });
 
-    // Exposes the card instance
+    // To add vecto layer
+    const addLayer = (geometries: any[]) => {
+      if (!mapInstance.value) {
+        console.error('The map is not yet initialized');
+        return;
+      }
+
+      const vectorSource = new VectorSource();
+      const factoryGeom = GeometryFactory.getInstance();
+
+      for (const geometry of geometries) {
+        
+        let geomCarac = JSON.parse(geometry.coordinates);
+        let geomObject = factoryGeom.createGeometry(geomCarac.coordinates);
+        let geomFeature = geomObject.addFeature(geomCarac);
+
+        vectorSource.addFeature(geomFeature);
+      }
+
+      const vectorLayer = new VectorLayer({
+        source: vectorSource,
+      });
+
+      mapInstance.value.addLayer(vectorLayer);
+    };
+
+    // Expose functions to other components
     expose({
       getMapInstance: () => mapInstance.value,
+      addLayer,
     });
 
     return {

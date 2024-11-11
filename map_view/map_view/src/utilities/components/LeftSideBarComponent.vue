@@ -23,6 +23,7 @@ export default defineComponent({
                 console.error("The `openModal` method is not available.");
             }
         };
+        
         const reinit = () => {
             console.log('test');
         };

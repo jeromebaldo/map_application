@@ -9,12 +9,12 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, provide } from 'vue';
 import { Map as OlMap } from 'ol';
-import MapComponent from './MapComponent.vue';
-import ModalFileComponent from './ModalFileComponent.vue';
-import LeftSideBarComponent from './LeftSideBarComponent.vue';
+import MapComponent from '../utilities/components/MapComponent.vue';
+import ModalFileComponent from '../utilities/components/ModalFileComponent.vue';
+import LeftSideBarComponent from '../utilities/components/LeftSideBarComponent.vue';
 
 export default defineComponent({
-  name: 'AppMap',
+  name: 'AppMapMain',
   components: {
     MapComponent,
     ModalFileComponent,
@@ -28,16 +28,19 @@ export default defineComponent({
     onMounted(() => {
       if (mapComponentRef.value) {
         mapInstance.value = mapComponentRef.value.getMapInstance();
-        if (mapInstance.value) {
-          console.log('Map initialized.');
-        }
       }
     });
 
-    // Provide the `getMapInstance` function for child components
     provide('getMapInstance', () => mapInstance.value);
+    
+    provide('addLayer', (geometries: any[]) => {
+      if (mapComponentRef.value) {
+        mapComponentRef.value.addLayer(geometries);
+      } else {
+        console.error("Reference to MapComponent not found.");
+      }
+    });
 
-    // Provide the `openModal` function for child components
     provide('openModal', () => {
       if (modalFileComponentRef.value) {
         modalFileComponentRef.value.openModal();

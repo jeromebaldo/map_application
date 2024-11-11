@@ -1,6 +1,5 @@
 import { Style, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
 
-// Style pour un point
 export const pointStyle = new Style({
     image: new CircleStyle({
         radius: 6,
@@ -12,7 +11,6 @@ export const pointStyle = new Style({
     }),
 });
 
-// Style pour une ligne
 export const lineStyle = new Style({
     stroke: new Stroke({
         color: '#00ff00',
@@ -20,7 +18,6 @@ export const lineStyle = new Style({
     }),
 });
 
-// Style pour un polygone
 export const polygonStyle = new Style({
     stroke: new Stroke({
         color: '#0000ff',
