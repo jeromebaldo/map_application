@@ -5,10 +5,12 @@ The objective is to first provide an interface using Vue.js with OpenLayers.
 Implemented functionality =>
 - Import of geometries of type polygon, linestring, and point onto the map
 - Usage of GDAL, OpenLayers, Vue.js, OpenStreetMap, and microservices
+- Usage of abstract factory for geometry (Design Pattern)
+- Refactoring components (centralize logic, use of GRAPS)
 Next iteration =>
-- Continue refactoring components (move the layer management into the map component)
-- Extract other logic from the components
 - Create a reset button
+- Create a singleton to notify
+- Create database 
 Key concepts =>
 - 'props' for setting an attribute of a child component
 - 'expose' makes an attribute or method available for external elements
